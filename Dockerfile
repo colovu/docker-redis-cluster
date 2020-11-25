@@ -11,7 +11,7 @@ ARG apt_source=default
 ARG local_url=""
 
 ENV APP_NAME=redis \
-	APP_VERSION=6.0.8
+	APP_VERSION=5.0.9
 
 RUN select_source ${apt_source};
 #RUN install_pkg xz-utils
@@ -19,7 +19,7 @@ RUN select_source ${apt_source};
 # 下载并解压软件包
 RUN set -eux; \
 	appName="${APP_NAME}-${APP_VERSION}.tar.gz"; \
-	sha256="04fa1fddc39bd1aecb6739dd5dd73858a3515b427acd1e2947a66dadce868d68"; \
+	sha256="53d0ae164cd33536c3d4b720ae9a128ea6166ebf04ff1add3b85f1242090cb85"; \
 	[ ! -z ${local_url} ] && localURL=${local_url}/${APP_NAME}; \
 	appUrls="${localURL:-} \
 		http://download.redis.io/releases \
@@ -31,9 +31,9 @@ RUN set -eux; \
 	APP_SRC="/usr/local/${APP_NAME}-${APP_VERSION}"; \
 	cd ${APP_SRC}; \
 # 禁用安全保护模式，在 Docker 中运行时不需要
-	grep -E '^ *createBoolConfig[(]"protected-mode",.*, *1 *,.*[)],$' ./src/config.c; \
-	sed -ri 's!^( *createBoolConfig[(]"protected-mode",.*, *)1( *,.*[)],)$!\10\2!' ./src/config.c; \
-	grep -E '^ *createBoolConfig[(]"protected-mode",.*, *0 *,.*[)],$' ./src/config.c; \
+	grep -q '^#define CONFIG_DEFAULT_PROTECTED_MODE 1$' ./src/server.h; \
+	sed -ri 's!^(#define CONFIG_DEFAULT_PROTECTED_MODE) 1$!\1 0!' ./src/server.h; \
+	grep -q '^#define CONFIG_DEFAULT_PROTECTED_MODE 0$' ./src/server.h; \
 	make MALLOC=libc BUILD_TLS=yes \
 		-j "$(nproc)" all; \
 	make PREFIX=/usr/local/${APP_NAME} install;  \
@@ -70,7 +70,7 @@ ARG local_url=""
 ENV APP_NAME=redis \
 	APP_USER=redis \
 	APP_EXEC=run.sh \
-	APP_VERSION=6.0.8
+	APP_VERSION=5.0.9
 
 ENV	APP_HOME_DIR=/usr/local/${APP_NAME} \
 	APP_DEF_DIR=/etc/${APP_NAME}
