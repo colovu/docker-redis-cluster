@@ -285,7 +285,7 @@ redis_wait_service() {
     let i=1
 
     if [[ -z "$(which nc)" ]]; then
-        LOG_E "Nedd nc installed before, command: \"apt-get install netcat\"."
+        LOG_E "Nedd nc installed before, command: \"apk add netcat-openbsd\"."
         exit 1
     fi
 
