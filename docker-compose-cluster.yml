@@ -4,44 +4,44 @@ version: '3.8'
 
 services:
   redis-node-0:
-    image: 'colovu/redis-cluster:6.0'
+    image: 'registry.cn-shenzhen.aliyuncs.com/colovu/redis-cluster:6.0'
     environment:
       - 'REDIS_PASSWORD=colovu'
       - 'REDIS_CLUSTER_NODES=redis-node-0 redis-node-1 redis-node-2 redis-node-3 redis-node-4 redis-node-5'
 
   redis-node-1:
-    image: 'colovu/redis-cluster:6.0'
+    image: 'registry.cn-shenzhen.aliyuncs.com/colovu/redis-cluster:6.0'
     environment:
       - 'REDIS_PASSWORD=colovu'
       - 'REDIS_CLUSTER_NODES=redis-node-0 redis-node-1 redis-node-2 redis-node-3 redis-node-4 redis-node-5'
 
   redis-node-2:
-    image: 'colovu/redis-cluster:6.0'
+    image: 'registry.cn-shenzhen.aliyuncs.com/colovu/redis-cluster:6.0'
     environment:
       - 'REDIS_PASSWORD=colovu'
       - 'REDIS_CLUSTER_NODES=redis-node-0 redis-node-1 redis-node-2 redis-node-3 redis-node-4 redis-node-5'
 
   redis-node-3:
-    image: 'colovu/redis-cluster:6.0'
+    image: 'registry.cn-shenzhen.aliyuncs.com/colovu/redis-cluster:6.0'
     environment:
       - 'REDIS_PASSWORD=colovu'
       - 'REDIS_CLUSTER_NODES=redis-node-0 redis-node-1 redis-node-2 redis-node-3 redis-node-4 redis-node-5'
 
   redis-node-4:
-    image: 'colovu/redis-cluster:6.0'
+    image: 'registry.cn-shenzhen.aliyuncs.com/colovu/redis-cluster:6.0'
     environment:
       - 'REDIS_PASSWORD=colovu'
       - 'REDIS_CLUSTER_NODES=redis-node-0 redis-node-1 redis-node-2 redis-node-3 redis-node-4 redis-node-5'
 
   redis-node-5:
-    image: 'colovu/redis-cluster:6.0'
+    image: 'registry.cn-shenzhen.aliyuncs.com/colovu/redis-cluster:6.0'
     environment:
       - 'REDIS_PASSWORD=colovu'
       - 'REDIS_CLUSTER_NODES=redis-node-0 redis-node-1 redis-node-2 redis-node-3 redis-node-4 redis-node-5'
 
 
   redis-cluster-init:
-    image: 'colovu/redis-cluster:6.0'
+    image: 'registry.cn-shenzhen.aliyuncs.com/colovu/redis-cluster:6.0'
     depends_on:
       - redis-node-0
       - redis-node-1
