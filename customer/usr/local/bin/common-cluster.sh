@@ -8,12 +8,13 @@
 
 . /usr/local/scripts/libfile.sh
 . /usr/local/scripts/libfs.sh
+. /usr/local/scripts/liblog.sh
 . /usr/local/scripts/libos.sh
 . /usr/local/scripts/libnet.sh
 . /usr/local/scripts/libservice.sh
 . /usr/local/scripts/libvalidations.sh
 
-. /usr/local/bin/comm-redis.sh
+. /usr/local/bin/common.sh
 
 # 函数库
 

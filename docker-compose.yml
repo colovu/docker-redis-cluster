@@ -1,18 +1,60 @@
 version: '3.8'
 
-# Docker-Compose 单容器使用参考 YAML 配置文件
-# 更多配置参数请参考镜像 README.md 文档中说明
+# 可以使用 scale 动态扩容容器：docker-compose scale redis-replica=3
+
 services:
-  redis:
-    image: 'registry.cn-shenzhen.aliyuncs.com/colovu/redis-cluster:6.0'
-    ports:
-      - '6379:6379'
+  redis-node-0:
+    image: 'colovu/redis-cluster:latest'
     environment:
-      # ALLOW_ANONYMOUS_LOGIN is recommended only for development.
-      - ALLOW_ANONYMOUS_LOGIN=yes
-      - REDIS_DISABLE_COMMANDS=FLUSHDB,FLUSHALL
-    volumes:
-      - 'redis_data:/srv/data'
+      - 'REDIS_PASSWORD=colovu'
+      - 'REDIS_CLUSTER_NODES=redis-node-0 redis-node-1 redis-node-2 redis-node-3 redis-node-4 redis-node-5'
+
+  redis-node-1:
+    image: 'colovu/redis-cluster:latest'
+    environment:
+      - 'REDIS_PASSWORD=colovu'
+      - 'REDIS_CLUSTER_NODES=redis-node-0 redis-node-1 redis-node-2 redis-node-3 redis-node-4 redis-node-5'
+
+  redis-node-2:
+    image: 'colovu/redis-cluster:latest'
+    environment:
+      - 'REDIS_PASSWORD=colovu'
+      - 'REDIS_CLUSTER_NODES=redis-node-0 redis-node-1 redis-node-2 redis-node-3 redis-node-4 redis-node-5'
+
+  redis-node-3:
+    image: 'colovu/redis-cluster:latest'
+    environment:
+      - 'REDIS_PASSWORD=colovu'
+      - 'REDIS_CLUSTER_NODES=redis-node-0 redis-node-1 redis-node-2 redis-node-3 redis-node-4 redis-node-5'
+
+  redis-node-4:
+    image: 'colovu/redis-cluster:latest'
+    environment:
+      - 'REDIS_PASSWORD=colovu'
+      - 'REDIS_CLUSTER_NODES=redis-node-0 redis-node-1 redis-node-2 redis-node-3 redis-node-4 redis-node-5'
+
+  redis-node-5:
+    image: 'colovu/redis-cluster:latest'
+    environment:
+      - 'REDIS_PASSWORD=colovu'
+      - 'REDIS_CLUSTER_NODES=redis-node-0 redis-node-1 redis-node-2 redis-node-3 redis-node-4 redis-node-5'
+
+
+  redis-cluster-init:
+    image: 'colovu/redis-cluster:latest'
+    depends_on:
+      - redis-node-0
+      - redis-node-1
+      - redis-node-2
+      - redis-node-3
+      - redis-node-4
+      - redis-node-5
+    environment:
+      - 'REDIS_CLUSTER_CREATOR=yes'
+      - 'REDISCLI_AUTH=colovu'
+      - 'REDIS_CLUSTER_REPLICAS=0'
+      - 'REDIS_CLUSTER_NODES=redis-node-0 redis-node-1 redis-node-2 redis-node-3 redis-node-4 redis-node-5'
+
 
 # 定义本地数据卷，由系统管理，需要手动删除
 volumes:

@@ -9,18 +9,18 @@ export ALLOW_ANONYMOUS_LOGIN="${ALLOW_ANONYMOUS_LOGIN:-no}"
 
 # 通过读取变量名对应的 *_FILE 文件，获取变量值；如果对应文件存在，则通过传入参数设置的变量值会被文件中对应的值覆盖
 # 变量优先级： *_FILE > 传入变量 > 默认值
-redis_env_file_lists=(
+app_env_file_lists=(
 	REDIS_PASSWORD
 	REDIS_MASTER_PASSWORD
 )
-for env_var in "${redis_env_file_lists[@]}"; do
+for env_var in "${app_env_file_lists[@]}"; do
     file_env_var="${env_var}_FILE"
     if [[ -n "${!file_env_var:-}" ]]; then
         export "${env_var}=$(< "${!file_env_var}")"
         unset "${file_env_var}"
     fi
 done
-unset redis_env_file_lists
+unset app_env_file_lists
 
 # 应用路径参数
 export APP_HOME_DIR="/usr/local/${APP_NAME}"
@@ -76,6 +76,10 @@ export REDIS_CLUSTER_ANNOUNCE_IP="${REDIS_CLUSTER_ANNOUNCE_IP:-}"
 export REDIS_DNS_RETRIES="${REDIS_DNS_RETRIES:-120}"
 
 # 内部变量
+export APP_PID_FILE="${REDIS_PID_FILE:-${APP_RUN_DIR}/${APP_NAME}.pid}"
+
+export APP_DAEMON_USER="${APP_NAME}"
+export APP_DAEMON_GROUP="${APP_NAME}"
 
 # 个性化变量
 # 如果设置了用户密码，设置环境变量 REDISCLI_AUTH，用于 `redis-cli` 登录时使用；不显示输入，保证安全

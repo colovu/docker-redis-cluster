@@ -7,14 +7,11 @@
 CONF_FILE="${APP_DEF_DIR}/redis.conf"
 echo "Process overrides for: ${CONF_FILE}"
 # 修改默认配置信息
-sed -i -E 's/^#?bind .*/bind 127.0.0.1/g' "${CONF_FILE}"
-sed -i -E 's/^#?daemonize .*/daemonize yes/g' "${CONF_FILE}"
 sed -i -E 's/^#?pidfile .*/pidfile \/var\/run\/redis\/redis.pid/g' "${CONF_FILE}"
 sed -i -E 's/^#?logfile .*/logfile \"\/var\/log\/redis\/redis.log\"/g' "${CONF_FILE}"
 
 SENTINEL_FILE="${APP_DEF_DIR}/sentinel.conf"
 echo "Process overrides for: ${SENTINEL_FILE}"
 # 修改 Sentinel 默认配置信息
-sed -i -E 's/^#?daemonize .*/daemonize yes/g' "${SENTINEL_FILE}"
 sed -i -E 's/^#?pidfile .*/pidfile \/var\/run\/redis\/redis-sentinel.pid/g' "${SENTINEL_FILE}"
 sed -i -E 's/^#?logfile .*/logfile \"\/var\/log\/redis\/redis-sentinel.log\"/g' "${SENTINEL_FILE}"
