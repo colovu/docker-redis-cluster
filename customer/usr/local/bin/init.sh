@@ -1,5 +1,5 @@
 #!/bin/bash
-# Ver: 1.1 by Endial Fang (endial@126.com)
+# Ver: 1.2 by Endial Fang (endial@126.com)
 # 
 # 应用初始化脚本
 
@@ -8,13 +8,14 @@
 set -eu
 set -o pipefail
 
-. /usr/local/bin/comm-redis-cluster.sh			# 应用专用函数库
-
-. /usr/local/bin/comm-env.sh 			# 设置环境变量
+. /usr/local/bin/common-cluster.sh			# 应用专用函数库
+. /usr/local/bin/environment.sh 			# 设置环境变量
 
 LOG_I "** Processing init.sh **"
 
 trap "${APP_NAME}_stop_server" EXIT
+
+redis_cluster_verify_minimum_env
 
 # 执行应用初始化操作
 redis_cluster_default_init
