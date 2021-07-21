@@ -14,32 +14,28 @@
 
 **镜像信息：**
 
-* 镜像地址：registry.cn-shenzhen.aliyuncs.com/colovu/redis-cluster:5.0
+* 镜像地址：
+  - 阿里云: registry.cn-shenzhen.aliyuncs.com/colovu/redis:5.0
+  - DockerHub：colovu/redis:5.0
+  * 依赖镜像：debian:buster
+
+> 后续相关命令行默认使用`[Docker Hub](https://hub.docker.com)`镜像服务器做说明
 
 
 
 ## TL;DR
 
-Docker 快速启动命令：
+Docker-Compose 集群快速启动命令：
 
 ```shell
-$ docker run -d -e ALLOW_ANONYMOUS_LOGIN=yes registry.cn-shenzhen.aliyuncs.com/colovu/redis-cluster:5.0
-```
+# 从 Gitee 下载 Compose 文件
+$ curl -sSL -o https://gitee.com/colovu/docker-redis-cluster/raw/5.0/docker-compose.yml
 
-Docker-Compose 快速启动命令：
+# 从 Github 下载 Compose 文件
+$ curl -sSL -o https://raw.githubusercontent.com/colovu/docker-redis-cluster/5.0/docker-compose.yml
 
-```shell
-$ curl -sSL https://raw.githubusercontent.com/colovu/docker-redis/5.0/docker-compose.yml > docker-compose.yml
-
+# 创建并启动容器
 $ docker-compose up -d
-```
-
-Docker-Compose 主从集群快速启动命令：
-
-```shell
-$ curl -sSL https://raw.githubusercontent.com/colovu/docker-redis/5.0/docker-compose-cluster.yml > docker-compose.yml
-
-$ docker-compose -f docker-compose-cluster.yml up -d
 ```
 
 
@@ -159,19 +155,23 @@ services:
 
 ### 容器安全
 
-本容器默认使用应用对应的运行时用户及用户组运行应用，以加强容器的安全性。在使用非`root`用户运行容器时，相关的资源访问会受限；应用仅能操作镜像创建时指定的路径及数据。使用`Non-root`方式的容器，更适合在生产环境中使用。
+本容器默认使用`non-root`运行应用，以加强容器的安全性。在使用`non-root`用户运行容器时，相关的资源访问会受限；应用仅能操作镜像创建时指定的路径及数据。使用`non-root`方式的容器，更适合在生产环境中使用。
+
+
+
+如果需要切换为`root`方式运行应用，可以在启动命令中增加`-u root`以指定运行的用户。
 
 
 
 ## 注意事项
 
-- 容器中 Redis 启动参数不能配置为后台运行，只能使用前台运行方式，即：`daemonize no`
+- 容器中应用的启动参数不能配置为后台运行，如果应用使用后台方式运行，则容器的启动命令会在运行后自动退出，从而导致容器退出
+
 
 
 ## 历史记录
 
-- 2020.9.11：更新 Redis 版本为 6.0.8
-
+- 2020.9.11： 更新 Redis 版本为 5.0.9
 
 ----
 
