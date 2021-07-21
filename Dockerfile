@@ -5,7 +5,7 @@
 
 # 设置当前应用名称及版本
 ARG app_name=redis
-ARG app_version=6.0.8
+ARG app_version=6.0.9
 
 # 设置默认仓库地址，默认为 阿里云 仓库
 ARG registry_url="registry.cn-shenzhen.aliyuncs.com"
@@ -43,7 +43,7 @@ WORKDIR /tmp
 # 下载并解压软件包
 RUN set -eux; \
 	appName="${APP_NAME}-${APP_VERSION}.tar.gz"; \
-	sha256="04fa1fddc39bd1aecb6739dd5dd73858a3515b427acd1e2947a66dadce868d68"; \
+	sha256="dc2bdcf81c620e9f09cfd12e85d3bc631c897b2db7a55218fd8a65eaa37f86dd"; \
 	[ ! -z ${local_url} ] && localURL=${local_url}/${APP_NAME}; \
 	appUrls="${localURL:-} \
 		http://download.redis.io/releases \
